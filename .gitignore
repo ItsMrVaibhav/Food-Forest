@@ -1,0 +1,12 @@
+environment
+*.env
+*.h5
+*.pyc
+**/*.pyc
+**/migrations/*
+**/management/*
+uploads
+**/__pycache__/*
+**/__pycache__
+.vscode/*
+**/.vscode/*

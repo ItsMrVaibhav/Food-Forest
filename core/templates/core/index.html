@@ -1,0 +1,68 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+<form action="{% url 'core:index' %}" class="p-3 bg-white" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="input-group">
+    <span class="input-group-text">Images</span>
+    <input type="file" class="form-control" accept=".png" name="images" multiple>
+    <input type="submit" value="Analyse" class="btn btn-dark">
+  </div>
+</form>
+<div class="recipes" id="recipes">
+  {% if recipes %}
+    {% for recipe, ingredients, url in recipes %}
+      <div class="card mt-3 bg-light rounded-0 border-0">
+        <div class="card-body d-flex">
+          <div class="d-flex flex-column align-items-center me-3 w-custom">
+            <img src="{{ url }}" alt="Food Image" class="w-custom border border-dark rounded-0">
+            <p class="mt-1 btn btn-sm btn-dark d-block w-100 rounded-0">{{ recipe.food.name|upper }}</p>
+            <div class="d-flex flex-wrap nm-custom justify-content-center">
+              {% for ingredient in ingredients %}
+                <span class="badge text-dark bg-white m-custom border">{{ ingredient.name }}</span>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="w-100 bg-white p-3">
+            <h3>Nutritional Details</h3>
+            <p>Following are the nutritional detals for each ingredient of the recipe.</p>
+            <table class="table text-center table-sm mb-0 mt-3">
+              <thead>
+                <tr>
+                  <th>S. No</th>
+                  <th>Ingredient</th>
+                  <th>Quantity (g)</th>
+                  <th>Calories (kcal)</th>
+                  <th>Calories per Gram (kcal/g)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for ingredient in ingredients %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ ingredient.name|upper }}</td>
+                  <td>{{ ingredient.quantity }} g</td>
+                  <td>{{ ingredient.calories }} kcal</td>
+                  <td>{{ ingredient.get_calories_per_quantity }} kcal/g</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}
