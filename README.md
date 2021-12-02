@@ -17,3 +17,12 @@ Next, to run the web application, use the following command to start the server 
 ```shell
 python manage.py runserver # Starts the server
 ```
+
+## Database
+
+The `db.sqlite3` file contains the following tables.
+  * `core_food`: This table contains information about the food categories.
+  * `core_ingredient`: This table contains information about the food ingredients.
+  * `core_recipe`: This is an intermediary table that maps food materials with ingredients.
+
+There are several other tables that are Django specific and are not related to the project.
